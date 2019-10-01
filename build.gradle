@@ -1,0 +1,32 @@
+plugins {
+    // Apply the java-library plugin to add support for Java Library
+    id 'java-library'
+
+    // Apply jacoco plugin to add code coverage
+    id 'jacoco'
+}
+
+repositories {
+    // Use jcenter for resolving dependencies.
+    // You can declare any Maven/Ivy/file repository here.
+    jcenter()
+}
+
+ext {
+    junitVersion = '4.12'
+}
+
+dependencies {
+    // Use JUnit test framework
+    testImplementation "junit:junit:$junitVersion"
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled = true
+        // HTML report location: build/reports/jacoco/test/html/index.html
+        html.enabled = true
+    }
+}
+
+check.dependsOn jacocoTestReport
