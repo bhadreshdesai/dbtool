@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="http://dbtool.bdd.com/database"
+           elementFormDefault="qualified"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:db="http://dbtool.bdd.com/database">
+
+    <xs:complexType name="column">
+        <xs:all>
+            <xs:element name="name" type="xs:string"/>
+            <xs:element name="dataType" type="xs:int"/>
+            <xs:element name="remarks" type="xs:string"/>
+        </xs:all>
+    </xs:complexType>
+
+    <xs:complexType name="table">
+        <xs:all>
+            <xs:element name="name" type="xs:string"/>
+            <xs:element name="remarks" type="xs:string"/>
+            <xs:element name="columns">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="column" type="db:column" maxOccurs="unbounded"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:all>
+    </xs:complexType>
+
+    <xs:complexType name="database">
+        <xs:all>
+            <xs:element name="tables">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="table" type="db:table" maxOccurs="unbounded"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:all>
+    </xs:complexType>
+
+    <xs:element name="database" type="db:database"/>
+</xs:schema>
