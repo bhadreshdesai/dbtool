@@ -13,13 +13,81 @@ repositories {
 }
 
 ext {
+    activationVersion = '1.1.1'
+    commonsIoVersion = '2.6'
     junitVersion = '4.12'
+    lombokVersion = '1.18.10'
+    lombokPluginVersion = '1.0'
+    // Use the latest version of jaxb to compile the generated code and run the tests
+    jaxbVersion = '2.3.1'
+    xewPluginVersion = '1.10'
+    // jaxb-xew-plugin works with xjc 2.2.11
+    xjcJaxbVersion = '2.2.11'
+    generatedSourcesDir = "$buildDir/generated/sources/xsd2java"
+}
+
+configurations {
+    // Configuration to run xjc to generate source from xsd
+    xjcTool
+    // Configuration for jaxb-xew-plugin
+    xjcPlugins
 }
 
 dependencies {
+    // Need to compile jaxb annotations
+    implementation "javax.xml.bind:jaxb-api:${jaxbVersion}"
+    // Needed by xjc-lombok-plugin to add @ToString and @EqualsAndHashCode to xjc generated source code
+    compileOnly "org.projectlombok:lombok:${lombokVersion}"
+    annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+
     // Use JUnit test framework
     testImplementation "junit:junit:$junitVersion"
+
+    // Needed by unit test to read files
+    testImplementation "commons-io:commons-io:${commonsIoVersion}"
+
+    // jaxb runtime used when running the unit tests
+    testRuntime "org.glassfish.jaxb:jaxb-runtime:${jaxbVersion}"
+
+    // xjc tool dependencies to generate source from xsd
+    xjcTool "javax.activation:activation:${activationVersion}"
+    xjcTool "javax.xml.bind:jaxb-api:${xjcJaxbVersion}"
+    xjcTool "com.sun.xml.bind:jaxb-impl:${xjcJaxbVersion}"
+    xjcTool "com.sun.xml.bind:jaxb-core:${xjcJaxbVersion}"
+    xjcTool "com.sun.xml.bind:jaxb-xjc:${xjcJaxbVersion}"
+
+    // jaxb-xew-plugin to create @XmlElementWrapper
+    xjcPlugins "com.github.jaxb-xew-plugin:jaxb-xew-plugin:${xewPluginVersion}"
+
+    // xjc-lombok-plugin to generate @EqualsAndHashCode and @ToString
+    // @EqualsAndHashCode is used in tests to compare objects
+    // @ToString will output complete detail of database on failure
+    xjcPlugins "de.plushnikov.xjc:xjc-lombok-plugin:${lombokPluginVersion}"
 }
+
+task processXSD {
+    inputs.file 'src/main/resources/xsd/database.xsd'
+    outputs.dir generatedSourcesDir
+    ant.taskdef(name: "xjc", classname: "com.sun.tools.xjc.XJCTask", classpath: configurations.xjcTool.asPath)
+
+    doLast {
+        mkdir generatedSourcesDir
+        ant.xjc(destdir: generatedSourcesDir, package: "com.bdd.dbtool.model", extension: true) {
+            classpath {
+                pathelement(path: configurations.xjcPlugins.asPath)
+            }
+            schema(dir: "src/main/resources/xsd", includes: "database.xsd")
+            arg(value: "-Xxew")
+            arg(value: "-Xlombok")
+        }
+    }
+}
+
+sourceSets.main.java {
+    srcDir generatedSourcesDir
+}
+
+compileJava.dependsOn processXSD
 
 jacocoTestReport {
     reports {

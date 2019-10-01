@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<database xmlns="http://dbtool.bdd.com/database">
+    <tables>
+        <table>
+            <name>table0</name>
+            <remarks>table remarks 0</remarks>
+            <columns>
+                <column>
+                    <name>t0c0</name>
+                    <dataType>0</dataType>
+                    <remarks>Table 0 column 0</remarks>
+                </column>
+                <column>
+                    <name>t0c1</name>
+                    <dataType>1</dataType>
+                    <remarks>Table 0 column 1</remarks>
+                </column>
+                <column>
+                    <name>t0c2</name>
+                    <dataType>2</dataType>
+                    <remarks>Table 0 column 2</remarks>
+                </column>
+                <column>
+                    <name>t0c3</name>
+                    <dataType>3</dataType>
+                    <remarks>Table 0 column 3</remarks>
+                </column>
+                <column>
+                    <name>t0c4</name>
+                    <dataType>4</dataType>
+                    <remarks>Table 0 column 4</remarks>
+                </column>
+            </columns>
+        </table>
+        <table>
+            <name>table1</name>
+            <remarks>table remarks 1</remarks>
+            <columns>
+                <column>
+                    <name>t1c0</name>
+                    <dataType>0</dataType>
+                    <remarks>Table 1 column 0</remarks>
+                </column>
+                <column>
+                    <name>t1c1</name>
+                    <dataType>1</dataType>
+                    <remarks>Table 1 column 1</remarks>
+                </column>
+                <column>
+                    <name>t1c2</name>
+                    <dataType>2</dataType>
+                    <remarks>Table 1 column 2</remarks>
+                </column>
+                <column>
+                    <name>t1c3</name>
+                    <dataType>3</dataType>
+                    <remarks>Table 1 column 3</remarks>
+                </column>
+                <column>
+                    <name>t1c4</name>
+                    <dataType>4</dataType>
+                    <remarks>Table 1 column 4</remarks>
+                </column>
+            </columns>
+        </table>
+        <table>
+            <name>table2</name>
+            <remarks>table remarks 2</remarks>
+            <columns>
+                <column>
+                    <name>t2c0</name>
+                    <dataType>0</dataType>
+                    <remarks>Table 2 column 0</remarks>
+                </column>
+                <column>
+                    <name>t2c1</name>
+                    <dataType>1</dataType>
+                    <remarks>Table 2 column 1</remarks>
+                </column>
+                <column>
+                    <name>t2c2</name>
+                    <dataType>2</dataType>
+                    <remarks>Table 2 column 2</remarks>
+                </column>
+                <column>
+                    <name>t2c3</name>
+                    <dataType>3</dataType>
+                    <remarks>Table 2 column 3</remarks>
+                </column>
+                <column>
+                    <name>t2c4</name>
+                    <dataType>4</dataType>
+                    <remarks>Table 2 column 4</remarks>
+                </column>
+            </columns>
+        </table>
+    </tables>
+</database>
